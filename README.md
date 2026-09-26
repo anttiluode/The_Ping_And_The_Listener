@@ -2,7 +2,7 @@
 
 *State-dependent emission, learned susceptibility, and sequence memory as a prediction engine — a working paper*
 
-Sep 26, 2026 · @Antti Luode
+Antti Luode · 26 September 2026
 
 ## Abstract
 
@@ -57,50 +57,50 @@ The cell-specific result is the one that points somewhere. If the same waveform 
 
 The effective connection between two neurons on a given event is the overlap between what the sender emits in its current state and what the receiver is sensitive to in its current state. Long-term memory is the slowly changing structure that decides both.
 
-Write the sender's state as x\_i and its emitted event as a short waveform s\_i that depends on that state. Write the receiver's temporal response kernel as h\_j, which depends on the receiver's state x\_j and its slow structure θ\_j. The effect of one event arriving with delay Δt is:
+Write the sender's state as $`x_i`$ and its emitted event as a short waveform $`s_i`$ that depends on that state. Write the receiver's temporal response kernel as $`h_j`$, which depends on the receiver's state $`x_j`$ and its slow structure $`\theta_j`$. The effect of one event arriving with delay $`\Delta t`$ is:
 
-```latex
+```math
 K_{ij}(x_i, x_j, \Delta t) = \int h_j(\tau \mid x_j, \theta_j)\, s_i(\tau - \Delta t \mid x_i)\, d\tau
 ```
 
-The classical weight w\_ij is the special case where neither s nor h depends on state. In this form, timing lives in Δt and in the geometry behind h. Sender history lives in s. Receiver history lives in h. "Resonance" is simply a large overlap.
+The classical weight $`w_{ij}`$ is the special case where neither $`s`$ nor $`h`$ depends on state. In this form, timing lives in $`\Delta t`$ and in the geometry behind $`h`$. Sender history lives in $`s`$. Receiver history lives in $`h`$. "Resonance" is simply a large overlap.
 
 Three consequences follow.
 
 **The vibration is the reader, not the memory.** A passive resonator rings down:
 
-```latex
+```math
 a(t) = a_0\, e^{-\gamma t}\, e^{i \omega t}
 ```
 
-With any damping, the ringing is gone in a few time constants. What lasts is θ: lengths, channel densities, couplings, synapses. A structure can sit silent and still be read later by the right probe. That is claim 1 made precise: the frozen wave is the shape of h, not a vibration that keeps going.
+With any damping, the ringing is gone in a few time constants. What lasts is $`\theta`$: lengths, channel densities, couplings, synapses. A structure can sit silent and still be read later by the right probe. That is claim 1 made precise: the frozen wave is the shape of $`h`$, not a vibration that keeps going.
 
-**A sequence is a path through susceptibilities.** After A arrives, the state x has moved, so h has changed, so a different next input now produces the largest response:
+**A sequence is a path through susceptibilities.** After A arrives, the state $`x`$ has moved, so $`h`$ has changed, so a different next input now produces the largest response:
 
-```latex
+```math
 x_{t+1} = F\big(x_t,\; h(x_t) * s_t\big)
 ```
 
-No list A → B → C is stored anywhere. A leaves the system in a state where B is easiest, and B does the same for C. Recall by cue (claim 4) is getting x into the right region, after which the continuation unrolls by itself.
+No list A → B → C is stored anywhere. A leaves the system in a state where B is easiest, and B does the same for C. Recall by cue (claim 4) is getting $`x`$ into the right region, after which the continuation unrolls by itself.
 
-**Prediction is cancellation.** If the system produces an expected input û and subtracts it, only the residue e = u − û remains:
+**Prediction is cancellation.** If the system produces an expected input $`\hat{u}`$ and subtracts it, only the residue $`e`$ remains:
 
-```latex
+```math
 e(t) = u(t) - \hat{u}(t)
 ```
 
-Familiar input goes quiet; new input stays loud. The residue is also the natural learning signal for θ. The clearest biological case is the electric fish, whose cerebellum-like electrosensory lobe learns a negative image of its own predictable discharge (Bell 1981; Bell et al. 1997). The cerebellar adaptive-filter theory describes the same motif: a bank of delays whose weighted sum is subtracted from input (Fujita 1982; Dean et al. 2010). This is what claim 5 calls the inverse; in control terms it is a forward model plus subtraction.
+Familiar input goes quiet; new input stays loud. The residue is also the natural learning signal for $`\theta`$. The clearest biological case is the electric fish, whose cerebellum-like electrosensory lobe learns a negative image of its own predictable discharge (Bell 1981; Bell et al. 1997). The cerebellar adaptive-filter theory describes the same motif: a bank of delays whose weighted sum is subtracted from input (Fujita 1982; Dean et al. 2010). This is what claim 5 calls the inverse; in control terms it is a forward model plus subtraction.
 
-One limit shapes the rest of the paper. A purely linear response can only replay: the response to A and B together is the sum of the separate responses. New combinations need K to depend on both states jointly, which makes the interaction multiplicative. Sections 5 and 6 are about when learning can find such an interaction and when it cannot.
+One limit shapes the rest of the paper. A purely linear response can only replay: the response to A and B together is the sum of the separate responses. New combinations need $`K`$ to depend on both states jointly, which makes the interaction multiplicative. Sections 5 and 6 are about when learning can find such an interaction and when it cannot.
 
 | claim | term in the framework |
 | --- | --- |
-| 1. neuron as frozen wave | ☐ slow structure θ that shapes h |
-| 2. unique ping | ☐ state-dependent waveform s(x\_i) |
-| 3. frozen sequence | ☐ a path of states, each making the next easiest |
-| 4. recall by rhythm | ☐ driving x into the region where the stored path starts |
-| 5. inverse of the world | ☐ predicted input û subtracted from input |
-| 6. intelligence from overlap | ☐ several easy continuations from one state; the choice and the residue's update of θ |
+| 1. neuron as frozen wave | slow structure $`\theta`$ that shapes $`h`$ |
+| 2. unique ping | state-dependent waveform $`s(x_i)`$ |
+| 3. frozen sequence | a path of states, each making the next easiest |
+| 4. recall by rhythm | driving $`x`$ into the region where the stored path starts |
+| 5. inverse of the world | predicted input $`\hat{u}`$ subtracted from input |
+| 6. intelligence from overlap | several easy continuations from one state; the choice and the residue's update of $`\theta`$ |
 
 ## 4. Evidence I: ResonaattoriAivo — recall by rhythm
 
@@ -108,7 +108,9 @@ ResonaattoriAivo supports claim 4 most directly: a cue that puts the system in t
 
 The machine is a bank of damped resonators per input channel, each with a decay τ and frequency ν measured in beats. A phase-locked clock, seeded by a four-click count-in, advances the resonators by phase rather than by time. A fixed random layer of 512 tanh units sits on top. The readout learns only from the residue, the actual next note minus the predicted one, and releases one note per beat slot. Every gate was written down and committed before the first run.
 
-&#91;embedded content: ResonaattoriAivo README and results/receipt.json · 6 tempos · GRU rows added post hoc\]
+![Next-beat accuracy vs playback tempo for ResonaattoriAivo and a GRU](figures/tempo_transfer.png)
+
+*Next-beat accuracy by playback tempo. Source: [ResonaattoriAivo](https://github.com/anttiluode/ResonaattoriAivo) README and `results/receipt.json`; the GRU rows were added post hoc.*
 
 The clock turns time into phase, so "two beats ago" is the same state at any tempo. The melody is stored as a shape over phase, not over milliseconds. Freezing the clock at the training tempo removes the transfer, so the clock, not the resonators alone, provides it.
 
@@ -147,7 +149,7 @@ For the hypothesis, step 4 is the closest measured form of claim 2. What crosses
 
 KapeaKanava shows that the hard part is not computing the interaction but starting to communicate at all. Generic learners almost never start; a multiplicative listener lets them start; and a cheap additive signal sent through the same channel froze history out in all 36 runs where it existed.
 
-The set-up: each side sees a noisy two-channel history whose class (one of four) is set only by the order of four events. The target is a 4 × 4 table T\[sender class, receiver class\] with zero row and column means and a chosen rank r. The sender emits a k-dimensional message, noise is added, and the receiver answers. A linear reader can reach at most R² = k/r. A single network that sees both histories solves every rank (R² 0.995–0.998), so the task is learnable. Predictions were committed before any run.
+The set-up: each side sees a noisy two-channel history whose class (one of four) is set only by the order of four events. The target is a 4 × 4 table $`T[c_s, c_r]`$ over sender class and receiver class, with zero row and column means and a chosen rank $`r`$. The sender emits a $`k`$-dimensional message, noise is added, and the receiver answers. A linear reader can reach at most $`R^2 = k/r`$. A single network that sees both histories solves every rank (R² 0.995–0.998), so the task is learnable. Predictions were committed before any run.
 
 **Startup, not computation, is the barrier.**
 
@@ -160,11 +162,11 @@ The set-up: each side sees a noisy two-channel history whose class (one of four)
 
 Every generic receiver can compute the answer when handed a perfect message. None can reliably get there with a learning sender. The reason is structural. Because T has zero row and column means, the message alone says nothing about the answer and the receiver's own state alone says nothing either; only their product does. A receiver that starts out roughly additive therefore sees no gradient to follow, and a sender facing a deaf receiver has none either. Each side waits for the other. A multiplicative receiver has the product built in, so the first gradient step already points somewhere.
 
-**When learning starts, it reaches the bound.** Wherever any seed started, the best seed landed within 0.012 of k/r (0.499 of 0.5; 0.328 of 0.333; 0.655 of 0.667). Starting got harder with higher rank, more noise, and a channel exactly as wide as the rank. Spare width helped: at noise 0.3, rank 2 started in 0 of 3 seeds with 2 or 3 dimensions and in 3 of 3 with 4.
+**When learning starts, it reaches the bound.** Wherever any seed started, the best seed landed within 0.012 of $`k/r`$ (0.499 of 0.5; 0.328 of 0.333; 0.655 of 0.667). Starting got harder with higher rank, more noise, and a channel exactly as wide as the rank. Spare width helped: at noise 0.3, rank 2 started in 0 of 3 seeds with 2 or 3 dimensions and in 3 of 3 with 4.
 
 **Economy comes from noise, not from a price.** At high noise, the multiplicative pair used exactly as many message dimensions as the rank, with no cost term. Adding a small energy cost on the message (λ = 0.01) stopped rank 2 and 3 from starting at all (R² 0.13 and 0.30). A cost pushes the message to zero before it can become useful, which deepens the deadlock.
 
-**The shortcut froze history out.** A random value z was placed in the sender's last few steps and added to the target, y = T + β·z. It is cheap, additive, and explains as much variance as the history interaction. It was taken within about 200 steps in every run. After that, the fraction of the history interaction carried stayed within ±0.01 of zero, exactly where a sender with no memory sits. This held even at four dimensions, where the same pair without the shortcut starts every time.
+**The shortcut froze history out.** A random value $`z`$ was placed in the sender's last few steps and added to the target, $`y = T + \beta z`$. It is cheap, additive, and explains as much variance as the history interaction. It was taken within about 200 steps in every run. After that, the fraction of the history interaction carried stayed within ±0.01 of zero, exactly where a sender with no memory sits. This held even at four dimensions, where the same pair without the shortcut starts every time.
 
 The pre-registered scorecard: four predictions held or mostly held, four failed, and two were void because generic pairs never started.
 
@@ -175,13 +177,13 @@ The two repositories disagree about cheap cues, and the disagreement is the most
 |  | FridayRepo, step 4 | KapeaKanava |
 | --- | --- | --- |
 | where the cue arrives | at the receiver, beside the channel | in the sender's history, through the same channel |
-| how it relates to the answer | a partial interaction: the first rank-1 part of the table, useful only when combined with the receiver's own state | additive: β·z, whatever anyone's state is |
+| how it relates to the answer | a partial interaction: the first rank-1 part of the table, useful only when combined with the receiver's own state | additive: $`\beta z`$, whatever anyone's state is |
 | what it trains the receiver to do | read outside input jointly with its own state | read the channel without regard to its own state |
 | history carried | yes: 4 of 4 seeds, one scalar enough; without the cue at most 1 of 4 | no: 0 of 36 runs |
 
 Section 6 explained why a pure interaction cannot start on its own: the message alone and the receiver's state alone each carry zero signal about the answer, so neither side has a gradient until the other has moved. Now look at what each cue does to that deadlock.
 
-KapeaKanava's cue is additive. The receiver learns it with an ordinary first-order gradient and settles into reading the channel the same way whatever its own state. The sender's message becomes a copy of z. Nothing in the receiver has become state-dependent, so a history-dependent change in the message still meets a flat listener. The deadlock is intact, and now the channel is also occupied.
+KapeaKanava's cue is additive. The receiver learns it with an ordinary first-order gradient and settles into reading the channel the same way whatever its own state. The sender's message becomes a copy of $`z`$. Nothing in the receiver has become state-dependent, so a history-dependent change in the message still meets a flat listener. The deadlock is intact, and now the channel is also occupied.
 
 FridayRepo's cue is a piece of the interaction itself. To use it at all, the receiver must learn to combine outside input with its own state. Once it has done that, its sensitivity to the channel already depends on its state, and a sender perturbation that tracks the remaining error has a first-order gradient to follow. The listener moves first; then the ping acquires meaning.
 
@@ -223,7 +225,7 @@ Most of the parts are old; what is ours is a small set of measurements and one p
 | --- | --- | --- |
 | Spike waveform depends on recent input and network state | established, small samples | Martin-Burgos et al. 2026; de Polavieja et al. 2005 |
 | A broader presynaptic spike changes the postsynaptic current | established | Sabatini & Regehr 1997; Geiger & Jonas 2000 |
-| Somatic state reaches only terminals within \~150–700 µm | established | Shu et al. 2006; Alle & Geiger 2006; Kole et al. 2007 |
+| Somatic state reaches only terminals within ~150–700 µm | established | Shu et al. 2006; Alle & Geiger 2006; Kole et al. 2007 |
 | Receiving neurons read waveform-borne history | **not shown** | no experiment yet |
 | A phase clock gives recall at any tempo from one training tempo | measured here | ResonaattoriAivo G2, 6 tempos; parts from Large & Kolen 1994 and Tallec & Ollivier 2018 |
 | Memory lives in a plastic listener geometry, not in ongoing vibration | old idea, measured here | reservoir computing, adaptive-filter theory; ResonaattoriAivo Stage 2, +30 points under noise |
@@ -248,7 +250,7 @@ One small experiment can confirm or kill the listener-first proposal: cross the 
 |  | cue given directly to the receiver | cue sent through the sender's channel |
 | --- | --- | --- |
 | **relational cue** (a partial interaction, useful only with the receiver's own state) | FridayRepo-like | new |
-| **additive cue** (β·z, state-independent) | new | KapeaKanava as run |
+| **additive cue** ($`\beta z`$, state-independent) | new | KapeaKanava as run |
 
 Add two arms that change only the listener: a receiver pre-trained on an unrelated task that forces it to read outside input jointly with its own state, and a fresh receiver with no cue. Measure how often communication starts, how fast, and the fraction of the history interaction carried.
 
